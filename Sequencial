@@ -1,0 +1,59 @@
+class Fila:
+    def __init__(self, capacidade):
+        self.capacidade = capacidade
+        self.fila = [None] * capacidade
+        self.inicio = 0
+        self.fim = -1
+        self.tamanho = 0
+
+    def enfileirar(self, item):
+        if self.tamanho == self.capacidade:
+            print("Fila cheia!")
+            return
+        self.fim = (self.fim + 1) % self.capacidade  # Movimento circular
+        self.fila[self.fim] = item
+        self.tamanho += 1
+
+    def desenfileirar(self):
+        if self.esta_vazia():
+            print("Fila vazia!")
+            return None
+        item = self.fila[self.inicio]
+        self.inicio = (self.inicio + 1) % self.capacidade  # Movimento circular
+        self.tamanho -= 1
+        return item
+
+    def esta_vazia(self):
+        return self.tamanho == 0
+
+    def esta_cheia(self):
+        return self.tamanho == self.capacidade
+
+    def frente(self):
+        return None if self.esta_vazia() else self.fila[self.inicio]
+
+    def imprimir(self):
+        if self.esta_vazia():
+            print("Fila vazia")
+            return
+        i = self.inicio
+        elementos = []
+        for _ in range(self.tamanho):
+            elementos.append(str(self.fila[i]))
+            i = (i + 1) % self.capacidade
+        print(" -> ".join(elementos))
+
+# Exemplo de uso
+fila = Fila(5)
+fila.enfileirar(1)
+fila.enfileirar(2)
+fila.enfileirar(3)
+fila.enfileirar(4)
+fila.imprimir()
+
+fila.desenfileirar()
+fila.imprimir()
+
+fila.enfileirar(5)
+fila.enfileirar(6)
+fila.imprimir()
